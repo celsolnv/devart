@@ -32,7 +32,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   return (
     <div className={styles.container}>
       <header>
-        <img src="/logo.svg" alt="Logo" />
+        <img src="/logo.svg" alt="logo" />
       </header>
 
       <main className={styles.posts}>
@@ -53,7 +53,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const response = await prismic.query(
     Prismic.Predicates.at('document.type', 'posts')
   );
-  // console.log(JSON.parse(JSON.stringify(response)));
   const next_page = response.next_page ?? '';
   const posts = response.results.map(post => {
     return {
