@@ -5,6 +5,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import Link from 'next/link';
 import { getPrismicClient } from '../services/prismic';
 import styles from './home.module.scss';
+import { PostPreview } from '../components/PostPreview';
 
 interface Post {
   uid?: string;
@@ -14,6 +15,7 @@ interface Post {
     subtitle: string;
     author: string;
   };
+  slug: string;
 }
 
 interface PostPagination {
@@ -35,20 +37,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
       <main className={styles.posts}>
         {results.map(post => (
-          <Link href="/posts" key={post.uid}>
+          <Link href={`/post/${post.slug}`} key={post.uid}>
             <a>
-              <h1>{post.data.title}</h1>
-              <span>{post.data.subtitle}</span>
-
-              <small>
-                {' '}
-                <img src="/icons/calendar.svg" alt="calendar" />{' '}
-                {post.first_publication_date}{' '}
-              </small>
-              <small>
-                {' '}
-                <img src="/icons/user.svg" alt="User" /> {post.data.author}
-              </small>
+              <PostPreview post={post} />
             </a>
           </Link>
         ))}
@@ -62,10 +53,11 @@ export const getStaticProps: GetStaticProps = async () => {
   const response = await prismic.query(
     Prismic.Predicates.at('document.type', 'posts')
   );
-  console.log(JSON.parse(JSON.stringify(response)));
+  // console.log(JSON.parse(JSON.stringify(response)));
   const next_page = response.next_page ?? '';
   const posts = response.results.map(post => {
     return {
+      slug: post.slugs,
       uid: post.uid,
       first_publication_date: format(
         new Date(post.first_publication_date),

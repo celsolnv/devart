@@ -11,35 +11,33 @@
     .posts{
         max-width: 720px;
         margin: 2rem auto 0;
-
         a{
-            padding:1rem 0;
-
-            h1{
-                font-size: 1.75rem;
-                color:var(--title);
-                padding-bottom: 0.857rem;
-            }
-            span{
-                font-size: 1.175rem;
-                color:var(--text);
-                display: block;
-                padding: 1rem 0;
-            }
-            small{
-                font-size: 0.875rem;
-                color:var(--info);
-                padding-right:0.7rem;
-                display: inline-flex;
-                align-items: center;
-
+            div{
+                padding:1rem 0;
+                
+                h1{
+                    font-size: 1.75rem;
+                    color:var(--title);
+                }
+                span{
+                    font-size: 1.175rem;
+                    color:var(--text);
+                    display: block;
+                    padding: 0.875rem 0 1.75rem 0;
+                }
+                small{
+                    font-size: 0.875rem;
+                    color:var(--info);
+                    padding-right:0.7rem;
+                    display: inline-flex;
+                    align-items: center;
+                    
                 img{
                     padding-right: 0.2rem;
                 }
             }
         }
-
-
-
+    }
+        
     }
 }
