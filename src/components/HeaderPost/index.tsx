@@ -1,3 +1,6 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
 interface HeaderPostData extends React.ComponentProps<'div'> {
   title: string;
   author: string;
@@ -15,7 +18,9 @@ export function HeaderPost({
 
       <small>
         <img src="/icons/calendar.svg" alt="calendar" />
-        {first_publication_date}
+        {format(new Date(first_publication_date), 'd MMM yyyy', {
+          locale: ptBR,
+        })}
       </small>
       <small>
         <img src="/icons/user.svg" alt="User" /> {author}

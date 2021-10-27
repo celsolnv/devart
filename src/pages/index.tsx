@@ -1,11 +1,11 @@
 import { GetStaticProps } from 'next';
 import Prismic from '@prismicio/client';
-import { format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
+
 import Link from 'next/link';
 import { getPrismicClient } from '../services/prismic';
 import styles from './home.module.scss';
 import { PostPreview } from '../components/PostPreview';
+import Header from '../components/Header';
 
 interface Post {
   uid?: string;
@@ -15,7 +15,6 @@ interface Post {
     subtitle: string;
     author: string;
   };
-  slug: string;
 }
 
 interface PostPagination {
@@ -31,13 +30,10 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const { next_page, results } = postsPagination;
   return (
     <div className={styles.container}>
-      <header>
-        <img src="/logo.svg" alt="logo" />
-      </header>
-
+      <Header />
       <main className={styles.posts}>
         {results.map(post => (
-          <Link href={`/post/${post.slug}`} key={post.uid}>
+          <Link key={post.uid} href={`/post/${post.uid}`}>
             <a>
               <PostPreview post={post} />
             </a>
@@ -56,15 +52,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const next_page = response.next_page ?? '';
   const posts = response.results.map(post => {
     return {
-      slug: post.slugs,
       uid: post.uid,
-      first_publication_date: format(
-        new Date(post.first_publication_date),
-        'd MMM yyyy',
-        {
-          locale: ptBR,
-        }
-      ),
+      first_publication_date: post.first_publication_date,
       data: {
         title: post.data.title,
         subtitle: post.data.subtitle,

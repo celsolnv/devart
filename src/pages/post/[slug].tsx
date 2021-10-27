@@ -69,14 +69,20 @@ export default function Post({ post }: PostProps): JSX.Element {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const prismic = getPrismicClient();
-  // const posts = await prismic.query(
-  //   Prismic.Predicates.at('document.type', 'posts')
-  // );
+  const prismic = getPrismicClient();
+  const posts = await prismic.query(
+    Prismic.Predicates.at('document.type', 'posts')
+  );
+  // console.log('meus posts', posts.results);
 
+  const paths = posts.results.map(post => ({
+    params: {
+      slug: post.uid,
+    },
+  }));
   return {
     fallback: true,
-    paths: [],
+    paths,
   };
   // TODO
 };
@@ -87,19 +93,18 @@ export const getStaticProps: GetStaticProps = async context => {
   const response = await prismic.getByUID('posts', String(slug), {});
 
   const post = {
-    first_publication_date: format(
-      new Date(response.first_publication_date),
-      'd MMM yyyy',
-      { locale: ptBR }
-    ),
+    uid: response.uid,
+    first_publication_date: response.first_publication_date,
     data: {
       title: response.data.title,
+      subtitle: response.data.subtitle,
       banner: response.data.banner,
       content: response.data.content,
       author: response.data.author,
-      update: format(new Date(response.last_publication_date), 'd MMM yyyy', {
-        locale: ptBR,
-      }),
+      // update: response.last_publication_date,
+      // update: format(new Date(response.last_publication_date), 'd MMM yyyy', {
+      //   locale: ptBR,
+      // }),
     },
   };
   return {

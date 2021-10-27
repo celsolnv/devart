@@ -1,3 +1,6 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
 interface PostObject {
   data: {
     title: string;
@@ -18,7 +21,9 @@ export function PostPreview({ post }: PostData): JSX.Element {
 
       <small>
         <img src="/icons/calendar.svg" alt="calendar" />
-        {post.first_publication_date}
+        {format(new Date(post.first_publication_date), 'd MMM yyyy', {
+          locale: ptBR,
+        })}
       </small>
       <small>
         <img src="/icons/user.svg" alt="User" /> {post.data.author}
