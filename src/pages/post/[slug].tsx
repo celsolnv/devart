@@ -73,7 +73,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await prismic.query(
     Prismic.Predicates.at('document.type', 'posts')
   );
-  // console.log('meus posts', posts.results);
 
   const paths = posts.results.map(post => ({
     params: {
@@ -84,7 +83,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
     paths,
   };
-  // TODO
 };
 
 export const getStaticProps: GetStaticProps = async context => {

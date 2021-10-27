@@ -31,11 +31,11 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const { next_page, results } = postsPagination;
   const [posts, setPosts] = useState(results);
   const [nextPage, setNextPage] = useState(next_page);
-  console.log(next_page);
-  async function handleLoadMorePosts() {
+  async function handleLoadMorePosts(): Promise<void> {
     const req = await (await fetch(next_page)).json();
-    const newPosts = req.results.map(post => {
-      return {
+    const newPosts = posts;
+    req.results.forEach(post => {
+      const formatedPost = {
         uid: post.uid,
         first_publication_date: post.first_publication_date,
         data: {
@@ -44,10 +44,10 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           author: post.data.author,
         },
       };
+      newPosts.push(formatedPost);
     });
-    newPosts.push(...posts);
     setPosts(newPosts);
-    setNextPage('');
+    setNextPage(req.next_page);
   }
   return (
     <div className={styles.container}>
@@ -61,6 +61,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           </Link>
         ))}
         {nextPage && (
+          // eslint-disable-next-line react/button-has-type
           <button
             onClick={handleLoadMorePosts}
             className={styles.loadMorePosts}
