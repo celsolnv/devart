@@ -2,7 +2,7 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 2rem;
-    
+
     header{
         max-width: 720px;
         margin: 5rem auto 0;
@@ -14,7 +14,7 @@
         a{
             div{
                 padding:1rem 0;
-                
+
                 h1{
                     font-size: 1.75rem;
                     color:var(--title);
@@ -31,22 +31,47 @@
                     padding-right:0.7rem;
                     display: inline-flex;
                     align-items: center;
-                    
+
                 img{
                     padding-right: 0.2rem;
                 }
             }
         }
     }
-        
+
+    }
+
+    footer{
+      margin-top: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+
+      aside{
+        width: 70%;
+        height: 58px;
+
+        background-color:#F8F8F8 ;
+        color:#1A1D23;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-weight: 700;
+        font-size: 18px;
+
+        border-radius: 4px;
+      }
     }
 }
 .loadMorePosts{
     background: none;
     border:none;
-    
+
     color:Highlight;
-    
+
     font-size: 1.125rem;
     font-weight: 600;
 
