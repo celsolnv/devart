@@ -10,6 +10,7 @@ import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { HeaderPost } from '../../components/HeaderPost';
 import Comments from '../../components/Comments';
+import Header from '../../components/Header';
 
 interface Post {
   first_publication_date: string | null;
@@ -36,7 +37,7 @@ export default function Post({ post }: PostProps): JSX.Element {
   return (
     post !== undefined && (
       <div className={styles.container}>
-        <img src="/logo.svg" className={styles.logo} alt="logo" />
+        <Header />
         <img
           className={styles.banner}
           src={post.data.banner.url}
