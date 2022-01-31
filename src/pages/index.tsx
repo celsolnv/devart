@@ -7,6 +7,7 @@ import { getPrismicClient } from '../services/prismic';
 import { PostPreview } from '../components/PostPreview';
 import Header from '../components/Header';
 import styles from './home.module.scss';
+import { ExitPreview } from '../components/ExitPreview';
 
 interface Post {
   uid?: string;
@@ -76,15 +77,7 @@ export default function Home({
           </button>
         )}
       </main>
-      <footer>
-        {preview && (
-          <aside>
-            <Link href="/api/exit-preview">
-              <a> Sair do modo Preview</a>
-            </Link>
-          </aside>
-        )}
-      </footer>
+      <ExitPreview preview={preview} />
     </div>
   );
 }
@@ -93,7 +86,6 @@ export const getStaticProps: GetStaticProps = async ({
   preview = false,
   previewData,
 }) => {
-  console.log(preview, previewData);
   const prismic = getPrismicClient();
   const response = await prismic.query(
     Prismic.Predicates.at('document.type', 'posts'),

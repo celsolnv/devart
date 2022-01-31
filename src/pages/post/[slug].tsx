@@ -11,6 +11,7 @@ import styles from './post.module.scss';
 import { HeaderPost } from '../../components/HeaderPost';
 import Comments from '../../components/Comments';
 import Header from '../../components/Header';
+import { ExitPreview } from '../../components/ExitPreview';
 
 interface Post {
   first_publication_date: string | null;
@@ -31,9 +32,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   return (
     post !== undefined && (
       <div className={styles.container}>
@@ -66,6 +68,7 @@ export default function Post({ post }: PostProps): JSX.Element {
           })}
         </div>
         <Comments />
+        <ExitPreview preview={preview} />
       </div>
     )
   );
@@ -88,9 +91,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const prismic = getPrismicClient();
-  const { slug } = context.params;
+  const { slug } = params;
   const response = await prismic.getByUID('posts', String(slug), {});
 
   const post = {
@@ -109,7 +115,7 @@ export const getStaticProps: GetStaticProps = async context => {
     },
   };
   return {
-    props: { post },
+    props: { post, preview },
     // revalidate: 10,
   };
 };
