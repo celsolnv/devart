@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import style from './style.module.scss';
 
 export default class Comments extends Component {
-  commentBox: React.RefObject<unknown>;
+  commentBox: React.RefObject<HTMLDivElement>;
 
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ export default class Comments extends Component {
     scriptEl.setAttribute('repo', 'vincentntang/vincentntang.com-comments');
     scriptEl.setAttribute('issue-term', 'pathname');
     scriptEl.setAttribute('theme', utteranceTheme);
-    this.commentBox.current.appendChild(scriptEl);
+    this.commentBox.current?.appendChild(scriptEl);
   }
 
   render() {
